@@ -11,7 +11,7 @@
     email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
     url: /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
     date: /\d{4}-\d{1,2}-\d{1,2}/,
-    rule: /^(.+?)\[(.+)\]$/,
+    ruleArg: /^(.+?)\[(.+)\]$/,
     password: /^[a-zA-Z0-9]{5,}$/	
   }
   var cache = {};
@@ -23,6 +23,19 @@
    * @param {Array} [fields]  Array of field with id, rules, and messages from JSON
    */
   var validate = function (formId, fields) {
+    try {
+      if (arguments.length !== 2) {
+        throw('validate takes two paramenter, form ID and fields object');
+      }
+      if (Object.prototype.toString.call( fields ) !== '[object Array]') {
+        throw('fields must be an array');
+      }
+    } catch(e) {
+      console.log(e);
+      return;
+    }
+
+
     var self = this;
     self.fields = {};
     self.form =  $('#' + formId);
@@ -127,7 +140,7 @@
         
     for (var index = 0; index < rules.length; index++){
       var rule = rules[index];
-      var parts = regex.rule.exec(rule);
+      var parts = regex.ruleArg.exec(rule);
       var validator = self._rules[rule];
       var param = null;
       var failed = false;
@@ -202,7 +215,6 @@
       if ((field.type === 'checkbox') || (field.type === 'radio')) {
           return field.checked === true;
       }
-      
       return (val !== null && val !== '');
     },
     email: function(field) {
@@ -246,7 +258,7 @@
     max_length: '{} cannot be greater than {} characters.'
   }
   
-  v.addRule = function(rule) {
+  v.setRule = function(rule) {
     $.extend(this._rules, rule);
   }
   
