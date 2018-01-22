@@ -18,7 +18,7 @@
     "karma-spec-reporter": "^0.0.26"
   },
   "dependencies": {
-    "jquery": "1.11",
+    "jquery": "^1.11",
     "karma-chrome-launcher": "^2.0.0"
   }
 }
