@@ -1,8 +1,8 @@
 {
   "name": "validate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A form validation library, jQuery dependent.",
-  "main": "index.js",
+  "main": "src/validate.js",
   "repository": {
     "url": "https://github.com/yaodingyd/validate.git",
     "type": "git"
